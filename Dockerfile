@@ -8,7 +8,8 @@ RUN npm install --only=production
 COPY . .
 
 # 创建启动脚本
-RUN echo '#!/bin/sh' > /opt/application/run.sh && \
+RUN mkdir -p /opt/application && \
+    echo '#!/bin/sh' > /opt/application/run.sh && \
     echo 'node /app/index.js' >> /opt/application/run.sh && \
     chmod +x /opt/application/run.sh
 
