@@ -1,20 +1,24 @@
-# 选用国内可用的 node 基础镜像
+# 使用Node.js 18作为基础镜像
 FROM node:18-alpine
 
+# 设置工作目录
 WORKDIR /app
 
-# 先拷贝依赖清单再安装，充分利用缓存
-COPY package*.json ./
+# 复制package.json和package-lock.json（如果存在）
+COPY server/package*.json ./
 
-# 仅安装生产依赖（兼容 npm 不同版本）
-RUN npm ci --omit=dev || npm install --only=production
+# 安装依赖
+RUN npm ci --only=production
 
-# 再拷贝其余源码
-COPY . .
+# 复制server目录内容
+COPY server/ ./
 
+# 暴露端口
+EXPOSE 9000
+
+# 设置环境变量
 ENV NODE_ENV=production
-# 抖音云会注入 PORT 环境变量；确保监听 0.0.0.0
-ENV HOST=0.0.0.0
+ENV PORT=9000
 
-# 如果你的入口文件是 index.js：
+# 启动应用
 CMD ["node", "index.js"] 
