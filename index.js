@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json({ limit: '10mb' }));
 app.use(morgan('dev'));
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8000;
 const MODEL_DIR = path.resolve(__dirname, process.env.MODEL_DIR || './data/models');
 
 const URLS = {
@@ -78,3 +78,4 @@ app.post('/warmup', async (req, res) => {
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`AI service listening on http://0.0.0.0:${PORT}`);
 }); 
+
