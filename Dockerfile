@@ -14,4 +14,5 @@ ENV HOST=0.0.0.0
 ENV PORT=9000
 EXPOSE 9000
 
-CMD ["node", "index.js"]
+CMD ["sh", "-c", "ulimit -n ${BYTEFAAS_FUNC_ULIMIT:-2048} && node index.js"]
+
