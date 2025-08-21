@@ -14,5 +14,6 @@ ENV HOST=0.0.0.0
 ENV PORT=9000
 EXPOSE 9000
 
-CMD ["sh", "-c", "ulimit -n ${BYTEFAAS_FUNC_ULIMIT:-2048} && node index.js"]
-
+COPY run.sh /opt/application/run.sh
+RUN chmod +x /opt/application/run.sh
+CMD ["/opt/application/run.sh"]
