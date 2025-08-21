@@ -1,25 +1,17 @@
-# 使用Node.js 18作为基础镜像
 FROM node:18-alpine
 
-# 设置工作目录
 WORKDIR /app
 
-# 复制package.json和package-lock.json（如果存在）
-COPY server/package*.json ./
+# 先装依赖
+COPY package*.json ./
+RUN npm ci --omit=dev || npm install --only=production
 
-# 安装依赖
-RUN npm ci --only=production
+# 再拷贝源码（根目录就是 index.js 等）
+COPY . .
 
-# 复制server目录内容
-COPY server/ ./
-
-# 暴露端口
+ENV NODE_ENV=production
+ENV HOST=0.0.0.0
+ENV PORT=9000
 EXPOSE 9000
 
-# 设置环境变量
-ENV NODE_ENV=production
-ENV PORT=9000
-
-# 启动应用
-CMD ["node", "index.js"] 
-
+CMD ["node", "index.js"]
