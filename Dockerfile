@@ -11,8 +11,8 @@ COPY . .
 
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
-ENV PORT=9000
-EXPOSE 9000
+ENV PORT=8000
+EXPOSE 8000
 
 COPY run.sh /opt/application/run.sh
 RUN chmod +x /opt/application/run.sh
